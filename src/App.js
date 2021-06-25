@@ -1,25 +1,46 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Batman from './data/Batman';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+// import moduleName from 'module'
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: []
+    };
+  }
+
+  componentDidMount = async() => {
+
+    let url = `http://www.omdbapi.com/?s=batman&apikey=46ed4d89`;
+
+    let results = await fetch(url);
+
+    let data = await results.json();
+
+    console.log(data);
+
+    this.setState({items: data.Search})
+  }
+
+
+
+  render() {
+    // const {results} = this.state;
+
+      return (
+        <> 
+        <div>
+
+        <Batman data={this.state.items} />
+        </div>
+        </>
+      );
+    }
+  }
+
 
 export default App;
